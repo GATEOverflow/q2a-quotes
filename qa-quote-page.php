@@ -57,8 +57,8 @@ class qa_quote_page
 					";
 			qa_opt("quotesaved", "false");
 		}
-		$hour = date("h");
-		if($hour == "00")
+		$hour = date("G");
+		if($hour == "0")
 		{
 			if(qa_opt("quotesaved")==="false")//want to tun this only once a day
 			{
