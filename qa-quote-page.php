@@ -56,7 +56,7 @@ class qa_quote_page
 				`quote` varchar(3072)
 					)
 					";
-			$queries[] = "CREATE EVENT myevent
+			$queries[] = "CREATE EVENT quoteevent
     ON SCHEDULE EVERY 1 DAY
     DO
       BEGIN
