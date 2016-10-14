@@ -48,32 +48,21 @@ class qa_quote_page
 	{
 		$queries = array();
 		$tablename=qa_db_add_table_prefix('quotes');
+		$tablenameq=qa_db_add_table_prefix('options');
 		if(!in_array($tablename, $tableslc)) {
 			$new = true;
 			$queries[] = "CREATE TABLE IF NOT EXISTS `".$tablename."` (
 				`quoteid` int(10) unsigned auto_increment primary key,
-				`quote` varchar(3072) unique
+				`quote` varchar(3072)
 					)
 					";
-			qa_opt("quotesaved", "false");
+			$queries[] = "CREATE EVENT myevent
+    ON SCHEDULE EVERY 1 DAY
+    DO
+      BEGIN
+        UPDATE ".$tablenameq." set content = (select quote from $tablename order by rand() limit 1) where title like 'quoteod';
+      END ";
 		}
-		$hour = date("G");
-		if($hour == "0")
-		{
-			if(qa_opt("quotesaved")==="false")//want to tun this only once a day
-			{
-				$query = "select quote from ^quotes order by rand() limit 1";
-				$result = qa_db_query_sub($query);
-				$quote = qa_db_read_one_value($result);
-				qa_opt("quoteod", $quote);
-				qa_opt("quotesaved", "true");
-			}
-		}
-		else {
-			if(qa_opt("quotesaved")==="true")
-				qa_opt("quotesaved", "false");
-		}
-		return $queries;
 
 	}
 	public function match_request($request)
