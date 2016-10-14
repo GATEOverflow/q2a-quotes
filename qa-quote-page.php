@@ -74,20 +74,20 @@ class qa_quote_page
 	public function process_request($request)
 	{
 		$qa_content=qa_content_prepare();
-
+		$ok = null;
 		$qa_content['title']=qa_lang_html('quote_page/page_title');
 		if(qa_clicked('okthen'))
 		{
 			$insert = "insert into ^quotes (quote) values ($)";
 			qa_db_query_sub($insert, qa_post_text('quote'));
+			$ok = "Quote Saved";
 		}
 
 		$qa_content['form']=array(
 				'tags' => 'method="post" action="'.qa_self_html().'"',
 
 				'style' => 'wide',
-
-				'ok' => qa_post_text('okthen') ? 'Quote saved' : null,
+				'ok' => ($ok && !isset($error)) ? $ok : null,
 
 				'title' => 'Input a quote',
 
