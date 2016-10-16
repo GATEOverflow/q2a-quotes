@@ -37,7 +37,7 @@ class qa_quote_page
 	{
 		return array(
 				array(
-					'title' => 'Quote',
+					'title' => qa_lang_html('quote_page/page_title'),
 					'request' => 'quote-plugin-page',
 					'nav' => 'M', // 'M'=main, 'F'=footer, 'B'=before main, 'O'=opposite main, null=none
 				     ),
@@ -53,7 +53,8 @@ class qa_quote_page
 			$new = true;
 			$queries[] = "CREATE TABLE IF NOT EXISTS `".$tablename."` (
 				`quoteid` int(10) unsigned auto_increment primary key,
-				`quote` varchar(3072)
+				`quote` varchar(3072),
+				`author` varchar(100)
 					)
 					";
 			$queries[] = "CREATE EVENT quoteevent
@@ -89,14 +90,20 @@ class qa_quote_page
 				'style' => 'wide',
 				'ok' => ($ok && !isset($error)) ? $ok : null,
 
-				'title' => 'Input a quote',
+				'title' => qa_lang_html('quote_page/form_title'),
 
 				'fields' => array(
 					'request' => array(
-						'label' => 'Quote',
+						'label' => qa_lang_html('quote_page/quote'),
 						'tags' => 'name="quote"',
 						'type' => 'textarea',
 						'rows' => 20,
+						'value' => '',
+						),
+					'author' => array(
+						'label' => qa_lang_html('quote_page/author'),
+						'tags' => 'name="author"',
+						'type' => 'text',
 						'value' => '',
 						),
 

@@ -22,4 +22,7 @@
 
 return array(
 	'page_title' => 'Quote Input page',
+	'form_title' => 'Quote Input form',
+	'quote' => 'Quote Text',
+	'author' => 'Author',
 );
