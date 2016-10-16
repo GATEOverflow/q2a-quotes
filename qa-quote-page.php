@@ -57,12 +57,16 @@ class qa_quote_page
 				`author` varchar(100)
 					)
 					";
+		}
+		$events = qa_db_read_one_value(qa_db_query_raw("show events where name like 'quoteevent'"), true);
+		if(!$events){
+
 			$queries[] = "CREATE EVENT quoteevent
-    ON SCHEDULE EVERY 1 DAY
-    DO
-      BEGIN
-        UPDATE ".$tablenameq." set content = (select quote from $tablename order by rand() limit 1) where title like 'quoteod';
-      END ";
+				ON SCHEDULE EVERY 1 DAY
+				DO
+				BEGIN
+				UPDATE ".$tablenameq." set content = (select quoteid from $tablename order by rand() limit 1) where title like 'quoteod';
+			END ";
 		}
 
 	}
@@ -79,8 +83,8 @@ class qa_quote_page
 		$qa_content['title']=qa_lang_html('quote_page/page_title');
 		if(qa_clicked('okthen'))
 		{
-			$insert = "insert into ^quotes (quote) values ($)";
-			qa_db_query_sub($insert, qa_post_text('quote'));
+			$insert = "insert into ^quotes (quote, author) values ($,$)";
+			qa_db_query_sub($insert, qa_post_text('quote'), qa_post_text('author'));
 			$ok = "Quote Saved";
 		}
 
@@ -110,12 +114,12 @@ class qa_quote_page
 					),
 
 				'buttons' => array(
-					'ok' => array(
-						'tags' => 'name="okthen"',
-						'label' => 'Submit',
-						'value' => '1',
+						'ok' => array(
+							'tags' => 'name="okthen"',
+							'label' => 'Submit',
+							'value' => '1',
+							),
 						),
-					),
 
 				'hidden' => array(
 						'hiddenfield' => '1',
