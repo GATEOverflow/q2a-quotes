@@ -68,6 +68,7 @@ class qa_quote_page
 				UPDATE ".$tablenameq." set content = (select quoteid from $tablename order by rand() limit 1) where title like 'quoteod';
 			END ";
 		}
+		return $queries;
 
 	}
 	public function match_request($request)
