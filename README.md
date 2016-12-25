@@ -7,3 +7,5 @@ This plugin requires MySQL event scheduler to be enabled which can be done by se
  event_scheduler=ON 
 
 in my.ini or my.cnf file. 
+
+Quotes must be added via Quote Input Page before widget is added for displaying the quote. 
