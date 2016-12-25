@@ -58,11 +58,13 @@ class qa_quote_page
 					)
 					";
 		}
-		$events = qa_db_read_one_value(qa_db_query_raw("show events where name like 'quoteevent'"), true);
+		$eventname=qa_db_add_table_prefix('quoteevent');
+		$events = qa_db_read_one_value(qa_db_query_raw("show events where name like '".$eventname."'"), true);
 		if(!$events){
 
-			$queries[] = "CREATE EVENT quoteevent
+			$queries[] = "CREATE EVENT $eventname
 				ON SCHEDULE EVERY 1 DAY
+				starts  concat( curdate() + interval 1 day, ' 00:00:00')
 				DO
 				BEGIN
 				UPDATE ".$tablenameq." set content = (select quoteid from $tablename order by rand() limit 1) where title like 'quoteod';

@@ -27,6 +27,7 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 
 
 qa_register_plugin_module('page', 'qa-quote-page.php', 'qa_quote_page', 'Quote Page');
+qa_register_plugin_module('widget', 'qa-quote-widget.php', 'qa_quote_widget', 'Quote Widget');
 qa_register_plugin_phrases('qa-quote-lang-*.php', 'quote_page');
 
 
